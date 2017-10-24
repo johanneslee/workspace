@@ -1,0 +1,50 @@
+<html>
+    <head>
+        <title>My workspace</title>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <style>
+            .chat-contents {border: 1px solid #2f2f31; height: 180px; overflow-y: scroll;}
+            form input {margin-top: 16px; height: 22px; border: 1px solid #2f2f31;}
+            form button {height: 22px; background: #2f2f31; border: 1px solid #2f2f31; color: #ffffff;}
+            #messages {list-style-type: none; margin:0; padding:0; }
+            #messages li {height: 20px; line-height: 20px; padding: 5px 10px;}
+            #messages li:nth-child(odd) {background: #eeeeee;}
+        </style>
+        <script>
+            $('.chat-contents').perfectScrollbar();
+            $(function () {
+                var socket = io();
+                $('form').submit(function(){
+                    if($('#m').val() != '') {
+                        socket.emit('message', $('#m').val());
+                        $('#m').val('');
+                    }
+                    return false;
+                });
+                socket.on('message', function(msg){
+                    $('#messages').append($('<li>').text(msg));
+                    $('.chat-contents').scrollTop($('.chat-contents').prop("scrollHeight"));
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="content">
+                <h1 class="chat-title">THIS IS HOW TO CHAT</h1>
+                <div class="chat-container">
+                    <div class="chat-contents">
+                        <ul id="messages">
+                        
+                        </ul>
+                    </div>
+                    <form action="">
+                        <input id="m" autocomplete="off" /><button>Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

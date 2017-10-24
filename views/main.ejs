@@ -1,0 +1,86 @@
+<html>
+    <head>
+        <title>My workspace</title>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.8.1/js/perfect-scrollbar.jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.perfect-scrollbar/0.8.1/css/perfect-scrollbar.min.css" />
+        <script>
+    		// Create the articles
+    		$(document).ready(function(){
+    		    $('#board').hide();
+    		    $('#study').hide();
+    		    $('#intro').show();
+    		    $('.main-row').show();
+    		    
+    		    $('.main-content').perfectScrollbar();
+                
+    		    $.ajax({
+                    type:"GET",
+                    url:"/json/main-data.json",
+                    dataType : 'json',
+                    success:function(data){
+                        var html = "";
+                        var i = 0;
+            			html += "<ul class='tbl-row'>";
+            			html += "<li class='tbl-cell'></li>";
+            			html += "<li class='tbl-cell'>name</li>";
+            			html += "<li class='tbl-cell'>date</li>";
+            			html += "<li class='tbl-cell-last'>link</li>";
+            			html += "</ul>";
+                        $.each(data, function(index, json) {
+                            ++i;
+            			    html += "<br>";
+            				html += "<ul class='tbl-row'>";
+            				html += "<li class='tbl-cell'>" + i + "</li>";
+            				html += "<li class='tbl-cell'>" + json.name + "</li>";
+            				html += "<li class='tbl-cell'>" + json.regdate + "</li>";
+            				html += "<li class='tbl-cell-last'><a class='main-btn' href='" + json.addr + "'>enter</a></li>";
+            		    	html += "</ul>";
+                        });
+		            	$('.tbl').html(html);
+        			}
+    		    });
+    		});
+        </script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="main-content">
+                <div class="main-row" style="display: none;">
+                    <div id="intro">
+                        <h1 class="main-title">나는 누구인가</h1>
+                        <p class="main-article">
+                            나는 웹 개발자다.<br>
+                            단국대학교에서 컴퓨터공학을 전공했고,<br>
+                            1년동안 웹 솔루션 회사에서 근무했다.<br>
+                            Javascript, ASP, Mssql를 약 1년 간 경력을 쌓았고,<br>
+                            그 외 Java, Android, Node.js, Mysql 등을 다루었다.<br>
+                            Javascript로 뭐든지 할 수 있다고 믿으며,<br>
+                            Node.js를 포함해 각종 프레임워크, API를 공부하는 중이다.<br>
+                            개발을 제외하면 피아노와 유튜브를 좋아하는 집돌이가 된다.<br>
+                        </p>
+                    </div>
+                    <div id="board">
+                        <h1 class="main-title">개발자라면 홈페이지 하나쯤은 있어야지</h1>
+                        <p class="main-article">
+                            ...라는 생각을 가졌던 스스로가 얼마나 후회되던지.<br>
+                            그냥 학교에서 배운 JSP로 대충 만들 걸 후회한다.<br>
+                            몇 달을 공부하고, 만들고, 뒤엎고, 다시 만들고,<br>
+                            지금까지도 계속되는 이 수정 전쟁에서,<br>
+                            잘 하고 싶은 욕심은 정말 끝도 없다.<br>
+                        </p>
+                    </div>
+                    <div id="study">
+                        <h1 class="main-title">만들어본 예제들</h1>
+                        <div class="main-article">
+                            <div class="tbl">
+                                &nbsp;&nbsp;&nbsp;&nbsp;로딩 중입니다
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
