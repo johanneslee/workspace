@@ -1,0 +1,6 @@
+{
+  "name": "workspace",
+  "description": "Johannes lee's workspace",
+  "repository": "https://github.com/johanneslee/workspace",
+  "keywords": ["node", "express", "heroku"],
+}
