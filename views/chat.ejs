@@ -1,9 +1,7 @@
 <html>
     <head>
-        <title>My workspace</title>
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <% include include/head %>
         <script src="/socket.io/socket.io.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/style.css">
         <style>
             .chat-contents {border: 1px solid #2f2f31; height: 180px; overflow-y: scroll;}
             form input {margin-top: 16px; height: 22px; border: 1px solid #2f2f31;}
@@ -13,7 +11,6 @@
             #messages li:nth-child(odd) {background: #eeeeee;}
         </style>
         <script>
-            $('.chat-contents').perfectScrollbar();
             $(function () {
                 var socket = io();
                 $('form').submit(function(){
