@@ -2,15 +2,37 @@
     <head>
         <% include include/head %>
         <script>
-    		// Create the articles
+    		
     		$(document).ready(function(){
-    		    //$('#board').hide();
-    		    //$('#study').hide();
-    		    //$('#intro').show();
-    		    //$('.main-row').show();
+    		    // slide menu
+        		$(".main-row > div:gt(0)").hide();
+        		
+                $("#btn-left").on("click", function() { 
+                    var $this = $(this);
+        		    if($this.hasClass('noClick')) return;
+                    $this.addClass('noClick');
+                    $(".main-row > div:first").hide()
+                    $(".main-row > div:last").prependTo($(".main-row"));
+                    $(".main-row > div:first").fadeIn(1000, function() {
+                        $this.removeClass('noClick');
+                    });
+                });
+                
+                $("#btn-right").on("click", function() { 
+                    var $this = $(this);
+        		    if($this.hasClass('noClick')) return;
+                    $this.addClass('noClick');
+                    $(".main-row > div:first").hide();
+                    $(".main-row > div:first").appendTo($(".main-row"));
+                    $(".main-row > div:first").fadeIn(1000, function() {
+                        $this.removeClass('noClick');
+                    });
+                });
     		    
+    		    // scroll div
     		    $('.main-content').perfectScrollbar();
                 
+                // make a table
     		    $.ajax({
                     type:"GET",
                     url:"/json/main-data.json",
@@ -42,9 +64,9 @@
     </head>
     <body>
         <div class="container">
-            <div class="main-content">
+            <div class="main-content" style="z-index: 10000;">
                 <div class="main-row">
-                    <div id="intro">
+                    <div class="slide-1">
                         <h1 class="main-title">나는 누구인가</h1>
                         <p class="main-article">
                             나는 웹 개발자다.<br>
@@ -57,7 +79,7 @@
                             개발을 제외하면 피아노와 유튜브를 좋아하는 집돌이가 된다.<br>
                         </p>
                     </div>
-                    <div id="board">
+                    <div class="slide-2">
                         <h1 class="main-title">개발자라면 홈페이지 하나쯤은 있어야지</h1>
                         <p class="main-article">
                             ...라는 생각을 가졌던 스스로가 얼마나 후회되던지.<br>
@@ -67,7 +89,7 @@
                             잘 하고 싶은 욕심은 정말 끝도 없다.<br>
                         </p>
                     </div>
-                    <div id="study" style="padding-bottom: 60px;">
+                    <div class="slide-3">
                         <h1 class="main-title">만들어본 예제들</h1>
                         <div class="main-article">
                             <div class="tbl">
@@ -77,6 +99,8 @@
                     </div>
                 </div>
             </div>
+            <div class="slide-btn" id="btn-left"><img src="/images/arrow-left.png"></div>
+            <div class="slide-btn" id="btn-right"><img src="/images/arrow-right.png"></div>
         </div>
     </body>
 </html>
